@@ -598,6 +598,7 @@ namespace Spreads.LMDB
         /// </summary>
         public IEnumerable<TValue> AsEnumerable<TKey, TValue>(ReadOnlyTransaction txn, TKey key)
         {
+            TraceListener
             var keyPtr = AsPointer(ref key);
             var keyLength = TypeHelper<TKey>.EnsureFixedSize();
             var key1 = new DirectBuffer(keyLength, (byte*)keyPtr);

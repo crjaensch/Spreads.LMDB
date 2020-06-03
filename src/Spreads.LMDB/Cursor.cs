@@ -275,7 +275,7 @@ namespace Spreads.LMDB
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static CursorImpl Create(Database db, TransactionImpl txn, bool readOnly)
         {
-            var c = CursorPool.Allocate();
+            var c = CursorPool.Rent();
 
             c._database = db;
             c._transaction = txn;
@@ -336,7 +336,7 @@ namespace Spreads.LMDB
             _transaction = null;
             if (disposing)
             {
-                CursorPool.Free(this);
+                CursorPool.Return(this);
             }
         }
 

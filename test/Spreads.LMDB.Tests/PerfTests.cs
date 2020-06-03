@@ -131,7 +131,7 @@ namespace Spreads.LMDB.Tests
 #pragma warning disable 618
             Settings.DoAdditionalCorrectnessChecks = false;
 #pragma warning restore 618
-            var count = TestUtils.GetBenchCount(TestUtils.InDocker ? 100_000 : 1000_000, 100_000);
+            var count = TestUtils.GetBenchCount(TestUtils.InDocker ? 100_000 : 100_000, 100_000);
             var rounds = 10;
             var extraRounds = 10;
 
@@ -185,9 +185,9 @@ namespace Spreads.LMDB.Tests
                     var tx = envS.BeginTransaction();
                     // using (tx)
                     {
-                        for (long i = r * count; i < (r + 1) * count; i++)
+                        for (long i = (r + 1) * count - 1 ; i >= r * count; i--)
                         {
-                            dbS.Put(tx, i, i, TransactionPutOptions.AppendData);
+                            dbS.Put(tx, i, i, TransactionPutOptions.None);
                             if (i % 10000 == 0)
                             {
                                 tx.Commit();
